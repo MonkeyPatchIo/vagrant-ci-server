@@ -1,0 +1,54 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  hosts: ee-ci-server
+  name: ansible_playbook
+
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_verbosity: 2
+  ansible_verbose: true
+
+  requirements_path: ansible/requirements.yml
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7.1
+    driver_plugin: vagrant
+    driver:
+      image_ref: CentOS71
+      server_wait: 20
+
+  - name: ubuntu-14.04
+    driver_plugin: vagrant
+    driver:
+      box: ubuntu/trusty64
+
+  - name: ubuntu-16.04
+    driver_plugin: vagrant
+    driver:
+      box: ubuntu/xenial64
+
+  - name: ubuntu-18.04
+    driver_plugin: vagrant
+    driver:
+      box: SharkLinux/Bionic
+
+suites:
+  - name: default
+    provisioner:
+      name: ansible_playbook
+      # Specify a specific variable files to use for this test suite
+      extra_vars_file: /tmp/kitchen/main.yml
+      additional_copy_path:
+        # Include downloaded ansible galaxy roles
+        - "."
+        # Include specific test variable file
+        - "test/integration/default/vars/main.yml"
+      additional_copy_role_path:
+        # Copy local ansible roles
+        - "ansible/roles"

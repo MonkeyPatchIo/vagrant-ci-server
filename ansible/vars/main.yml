@@ -1,0 +1,46 @@
+---
+
+# TeamCity Configuration
+teamcity_server_version: 2017.2.2
+teamcity_server_sha256: cd735330e800473c5f1a5df8c6d55238d9931464cf14ead8cb8c4e8edfa38238
+
+# Find plugins from https://plugins.jetbrains.com/search?pr=teamcity&pr_productId=teamcity
+teamcity_server_plugins:
+  - name: "crowd-plugin"
+    url: https://dl.bintray.com/greggigon/generic/teamcity-crowd-plugin-0.3.0.zip
+  # Commenting out to speed up installation
+  # - name: "ansible-plugin"
+  #   url: https://github.com/andreizhuk/tc-ansible-runner/releases/download/v1.0.1/ansible-runner-dist.zip
+  # - name: "envinject-plugin"
+  #   url: https://github.com/kannanekanath/teamcity-envinject-plugin/releases/download/1.0/envinject.zip
+  # - name: "xunit-plugin"
+  #   url: https://github.com/carlpett/xUnit-TeamCity/releases/download/v1.2.0/xUnit.zip
+  # - name: "github-plugin"
+  #   url: http://teamcity.jetbrains.com/guestAuth/repository/download/bt398/lastest.lastSuccessful/teamcity.github.zip
+  # - name: "commit-hook-plugin"
+  #   url: https://teamcity.jetbrains.com/repository/download/TeamCityPluginsByJetBrains_TeamcityCommitHooks_Build/.lastPinned/teamcity-commit-hooks.zip?guest=1
+  # - name: "docker-plugin"
+  #   url: https://teamcity.jetbrains.com/repository/download/TeamCityVirtual_Build/.lastPinned/TeamCity.Virtual.zip?guest=1
+  # - name: "chuck-plugin"
+  #   url: https://dl.bintray.com/dbf/teamcity-chuck-plugin/chucktcplugin-0.5.2.zip
+  # - name: "build-matrix-plugin"
+  #   url: https://github.com/presidentio/teamcity-matrix-build-plugin/releases/download/v1.0.0/matrix-build.zip
+  # - name: "slack-plugin"
+  #   url: https://github.com/PeteGoo/tcSlackBuildNotifier/releases/download/v1.4.6/tcSlackNotificationsPlugin.zip
+  # - name: "webhook-plugin"
+  #   url: https://github.com/tcplugins/tcWebHooks/releases/download/v1.1-alpha8.140.143/tcWebHooksPlugin-1.1-alpha8.140.143.zip
+  # - name: "buildtag-plugin"
+  #   url: https://github.com/echocat/teamcity-buildTagsViaBuildLog-plugin/releases/download/v1.0/BuildTagsViaBuildLog.zip
+
+# Nginx Configuration
+nginx_sites:
+  teamcity:
+    - listen 80
+    - server_name localhost
+    - location / {
+        proxy_pass http://127.0.0.1:8111/;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_redirect off;
+      }

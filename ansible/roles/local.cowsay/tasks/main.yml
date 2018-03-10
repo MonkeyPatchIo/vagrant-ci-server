@@ -1,0 +1,14 @@
+---
+
+# Bonus package
+- name: Install the latest version of cowsay
+  package:
+    name: cowsay
+    state: latest
+
+- name: Cowsay Installation complete!
+  shell: "/usr/games/cowsay -f tux {{ cowsay.completed }}"
+  register: cowsay_debug
+
+- debug:
+    msg: "{{ cowsay_debug.stdout_lines }}"
