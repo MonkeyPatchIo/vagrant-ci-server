@@ -133,3 +133,8 @@ Switching to a different CI Server such as Jenkins or GoCD is as easy as swappin
 You may prefer use these CI Servers:
 - [Jenkins](https://galaxy.ansible.com/geerlingguy/jenkins)
 - [GoCD](https://galaxy.ansible.com/ansible-city/gocd_server)
+
+## About MonkeyPatch
+We are a team of It experts. We are specialised in cloud, mobile and database.
+[MonkeyPatch](http://www.monkeypatch.io/en)
+![monkeypatch](mkp.png)
